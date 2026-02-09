@@ -21,8 +21,20 @@ function go() {
     }
   }
 
+  // 嘗試 iframe
   iframe.src = url;
   lockGoogle();
+
+  // 5 秒後如果 iframe 失敗 → 新分頁打開
+  setTimeout(() => {
+    try {
+      if (!iframe.contentWindow || iframe.contentWindow.length === 0) {
+        window.open(url, "_blank");
+      }
+    } catch {
+      window.open(url, "_blank");
+    }
+  }, 5000);
 }
 
 iframe.src = "https://www.google.com";
